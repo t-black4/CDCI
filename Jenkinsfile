@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Run the unit tests
-                    
+                    sh 'pwd'
                     sh 'source venv/bin/activate && python -m unittest discover -s tests'
                 }
             }
