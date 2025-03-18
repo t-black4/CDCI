@@ -14,12 +14,15 @@ pipeline {
             steps {
                 script {
                     echo 'Setting up the environment...'
-                    // Create virtual environment and install dependencies
-                    sh '''
-                    python3 -m venv venv
-                    source venv/bin/activate
-                    pip install -r requirements.txt
-                    '''
+                    // Change directory to MyPythonProject
+                    dir('MyPythonProject') {
+                        // Create virtual environment and install dependencies
+                        sh '''
+                        python3 -m venv venv
+                        source venv/bin/activate
+                        pip install -r requirements.txt
+                        '''
+                    }
                 }
             }
         }
@@ -27,11 +30,14 @@ pipeline {
             steps {
                 script {
                     echo 'Running tests...'
-                    // Run the tests with the virtual environment activated
-                    sh '''
-                    source venv/bin/activate
-                    python -m unittest discover tests
-                    '''
+                    // Change directory to MyPythonProject
+                    dir('MyPythonProject') {
+                        // Run the tests with the virtual environment activated
+                        sh '''
+                        source venv/bin/activate
+                        python -m unittest discover tests
+                        '''
+                    }
                 }
             }
         }
@@ -40,7 +46,9 @@ pipeline {
         always {
             echo 'Cleaning up...'
             // Clean up the virtual environment (optional)
-            sh 'rm -rf venv'
+            dir('MyPythonProject') {
+                sh 'rm -rf venv'
+            }
         }
     }
 }
