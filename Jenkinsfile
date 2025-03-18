@@ -37,6 +37,8 @@ pipeline {
                         sh '''
                         # Activate virtual environment
                         . venv/bin/activate
+                        # Ensure pytest is installed
+                        pip install pytest
                         # Run your test command here, e.g., pytest
                         pytest
                         '''
