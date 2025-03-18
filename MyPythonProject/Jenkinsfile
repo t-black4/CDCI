@@ -5,24 +5,42 @@ pipeline {
             steps {
                 script {
                     echo 'Checking out the code...'
+                    // Checkout the code from version control
+                    checkout scm
                 }
             }
         }
         stage('Setup') {
             steps {
                 script {
-                    sh 'python3 -m venv venv'
-                    sh 'source venv/bin/activate'
-                    sh 'pip install -r requirements.txt'
+                    echo 'Setting up the environment...'
+                    // Create virtual environment and install dependencies
+                    sh '''
+                    python3 -m venv venv
+                    source venv/bin/activate
+                    pip install -r requirements.txt
+                    '''
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    sh 'source venv/bin/activate && python -m unittest discover tests'
+                    echo 'Running tests...'
+                    // Run the tests with the virtual environment activated
+                    sh '''
+                    source venv/bin/activate
+                    python -m unittest discover tests
+                    '''
                 }
             }
+        }
+    }
+    post {
+        always {
+            echo 'Cleaning up...'
+            // Clean up the virtual environment (optional)
+            sh 'rm -rf venv'
         }
     }
 }
