@@ -14,11 +14,12 @@ pipeline {
             steps {
                 script {
                     echo 'Setting up the environment...'
-                    // Change directory to MyPythonProject
+                    // Change directory to MyPythonProject and create virtual environment
                     dir('MyPythonProject') {
-                        // Create virtual environment and install dependencies
                         sh '''
+                        # Create virtual environment
                         /usr/bin/python3 -m venv venv
+                        # Activate virtual environment and install dependencies
                         . venv/bin/activate
                         pip install -r requirements.txt
                         '''
@@ -26,16 +27,18 @@ pipeline {
                 }
             }
         }
+
         stage('Test') {
             steps {
                 script {
                     echo 'Running tests...'
-                    // Change directory to MyPythonProject
+                    // Change directory to MyPythonProject and run tests
                     dir('MyPythonProject') {
-                        // Run the tests with the virtual environment activated
                         sh '''
-                        source venv/bin/activate
-                        python -m unittest discover tests
+                        # Activate virtual environment
+                        . venv/bin/activate
+                        # Run your test command here, e.g., pytest
+                        pytest
                         '''
                     }
                 }
