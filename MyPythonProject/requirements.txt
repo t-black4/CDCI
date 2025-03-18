@@ -1,4 +1,4 @@
 # Add dependencies here
-pytest
-unittest
+pytest==8.3.5
+
 
