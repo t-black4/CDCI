@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    echo 'Checking out the code...'
+                }
+            }
+        }
+        stage('Setup') {
+            steps {
+                script {
+                    sh 'python3 -m venv venv'
+                    sh 'source venv/bin/activate'
+                    sh 'pip install -r requirements.txt'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    sh 'source venv/bin/activate && python -m unittest discover tests'
+                }
+            }
+        }
+    }
+}
