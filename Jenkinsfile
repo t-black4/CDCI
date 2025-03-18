@@ -19,7 +19,7 @@ pipeline {
                         // Create virtual environment and install dependencies
                         sh '''
                         /usr/bin/python3 -m venv venv
-                        source venv/bin/activate
+                        . venv/bin/activate
                         pip install -r requirements.txt
                         '''
                     }
