@@ -38,7 +38,7 @@ pipeline {
                 script {
                     // Run the tests within the virtual environment
                     sh '''
-                    bash -c "source MyPythonProject/venv/bin/activate && pytest tests/test_main.py"
+                    bash -c "source MyPythonProject/venv/bin/activate && pytest MyPythonProject/tests/test_main.py"
                     '''
                 }
             }
